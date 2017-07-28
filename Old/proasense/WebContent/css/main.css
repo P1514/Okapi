@@ -1,0 +1,335 @@
+#mainContainer {
+	vertical-align:top;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 98%;
+}
+#page-content-wrapper{
+	background-color:#FFFFFF;
+	visibility:hidden;
+	height: 100%;
+}
+
+.heatMap rect.bordered {
+	stroke: #E6E6E6;
+	stroke-width:2px;   
+}
+
+.heatMap text.mono {
+	font-size: 9pt;
+	font-family: Consolas, courier;
+	fill: #aaa;
+}
+
+.heatMap text.axis-workweek {
+	fill: #000;
+}
+
+.heatMap text.axis-worktime {
+	fill: #000;
+}
+#KPITree{
+    border-style: solid;
+    border-width: 1px;
+	width: 300px;
+	max-width: 100%;
+}
+
+#targetTable
+{
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+.inputField {
+	width:150px;
+	margin-bottom: 5px;
+}
+.progress span{
+    display: block;
+    position: absolute;
+    width: 90%;
+}
+
+.containerColor{
+	background-color: #F9F9FC
+}
+.containerColor2{
+	background-color: #F0F0F3;
+}
+
+.pageHeader{
+	font-size: 15pt;
+	
+}
+
+
+.mainTable TD{
+	vertical-align:top;
+}
+.screenTable{
+	width:100%;
+    border-spacing: 10px;
+    border-collapse: separate;
+}
+
+.screenTable TD{
+	text-align:left;
+}
+
+.screen{
+	background-color:#FFFFFF;
+	width:100%;
+	visibility: hidden;
+}
+
+.logo{
+	background-image: url("../images/proasense.svg");
+	height: 100%;
+	background-size:65%;
+	background-position: center; 
+	background-repeat: no-repeat;
+}
+
+.headerTable{
+	text-align:center;
+    border-collapse: separate;	
+    border-spacing: 3px;
+	width: 100%;
+}
+.queryTable
+{	
+	width:80%;
+	max-width:600px;
+	margin-left:auto;
+	margin-right:auto;
+	border-spacing:10px;
+}
+.queryTable input
+{
+	width: 200px;
+}
+#attributesTable tr
+{
+	display:none;
+}
+.queryTable select
+{
+	width: 200px;
+}
+
+#chart circle{
+	cursor: pointer;
+}
+/*
+#heatMap rect{
+	cursor: pointer;
+}
+*/
+.chartTable{
+	border-collapse: separate;
+	border-spacing: 5px
+}
+.bottomTable{
+	width:100%;
+	border-spacing: 5px;
+}
+.middleTable{
+	background-color: #F0F0F3;
+    border-collapse: separate;	
+    border-spacing: 10px;
+	width: 100%;
+}
+
+.tab-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+
+.kpiChoice
+{
+	display:none;
+}
+.sensorChoice
+{
+	display:none;
+}
+.eventTypeChoice{
+	
+	/*display:none;
+	disabled:true;*/
+}
+.eventTypeValue{
+	display:block;
+}
+.partitionSelection{
+	display: none;
+}
+.eventBoxType{
+	display:none;
+	margin: 5px;
+}
+.elAggRow
+{
+	display:none;
+}
+.elRow
+{
+	display:none;
+}
+/* .box{ */
+/* 	width:150px; */
+/* } */
+.thEl
+{
+	color:#808080;
+}
+.grey{
+	color:#808080;
+}
+.box option:not(:disabled){
+	/* color:white; */
+/* 	color:#808080; */
+	color: inherit;
+}
+
+.nav-tabs {
+    margin-bottom: 0;
+}
+
+.hiddenRow{
+	display:none
+}
+
+
+.granularityBoxes  {
+	width: 65%;
+}
+
+
+.form-control-custom {
+/*    /* min-width: 0; */
+/*     width: auto; */
+    display: inline;
+    max-width: 30%;
+/*     background-color: navy; */
+}
+
+.form-control-custom2 {
+/*    /* min-width: 0; */
+/*     width: auto; */
+    display: inline;
+    
+/*     background-color: navy; */
+}
+
+.form-control-custom option {
+	text-align:left;
+}
+
+.td-dataselectionbox {
+	border:0px solid black;
+	vertical-align:top;
+	width:150px
+}
+
+.calendar-hidden {
+	display:none
+}
+
+.samplingRate td:nth-child(2) {
+	width: 20%;
+}
+
+#samplingInterval {
+	width : 100px;
+}
+
+.select-7 {
+	width : 50px;
+}
+
+.select-10 {
+	width : 100px;
+}
+.select-15 {
+	width : 150px;
+}
+
+.select-20 {
+	width : 100px;
+}
+
+.select-25 {
+	width : 220px;
+}
+
+.select-30 {
+	width : 30%;
+}
+
+.select-35 {
+	width : 35%;
+}
+
+.select-40 {
+	width : 40%;
+}
+
+.select-45 {
+	width : 300px;
+}
+
+.select-50 {
+	width : 50%;
+}
+
+.select-55 {
+	width : 55%;
+}
+
+.select-60 {
+	width : 60%;
+}
+
+.select-65 {
+	width : 65%;
+}
+
+.select-70 {
+	width : 70%;
+}
+
+.select-75 {
+	width : 75%;
+}
+
+.select-80 {
+	width : 80%;
+}
+
+.select-85 {
+	width : 85%;
+}
+
+.select-90 {
+	width : 90%;
+}
+
+.select-95 {
+	width : 95%;
+}
+
+.select-100 {
+	width : 100%;
+}
+
+#calculationType {
+	min-width: 175px;
+}
+
+#numberSupport {
+	min-width: 100px;
+}
