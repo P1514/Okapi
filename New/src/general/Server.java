@@ -19,7 +19,7 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint("/server")
 public class Server {
 	private Session session;
-	private static final Logger LOGGER = new Logging().create(Server.class.getName());
+	private static Logger LOGGER = new Logging().create(Server.class.getName(),false);
 
 	/** The Assyncronous variable. */
 	Async as;
@@ -98,5 +98,9 @@ public class Server {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void LogtoDB(){
+		LOGGER = new Logging().create(Server.class.getName(),true); 
 	}
 }
