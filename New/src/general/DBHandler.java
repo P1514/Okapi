@@ -26,12 +26,14 @@ public class DBHandler extends Handler {
 		this.timestamp = new Timestamp(timestamp);
 	}
 
-	private void dbconnect() {
+	private boolean dbconnect() {
 		try {
 			cnlocal = Settings.connlocal();
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 
 	/**
@@ -50,7 +52,7 @@ public class DBHandler extends Handler {
 			return;
 		}
 		
-		dbconnect();
+		if(!dbconnect())return;
 
 		String sql = "INSERT INTO " + Settings.ltable + "(" + Settings.ltable_user + "," + Settings.ltable_timestamp
 				+ "," + Settings.ltable_log + ") VALUES (?,?,?)";

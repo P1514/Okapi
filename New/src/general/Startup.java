@@ -15,12 +15,16 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class Startup implements ServletContextListener {
 	
-	private static final Logger LOGGER = new Logging().create(Startup.class.getName());
+	private static Logger LOGGER = new Logging().create(Startup.class.getName(),false);
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		// Start Up Sequence
+		Settings.startconnections();
+		changeLogstoDB();
 		LOGGER.log(Level.INFO,"Starting Up!");
+		
+		
 
 	}
 
@@ -46,5 +50,15 @@ public class Startup implements ServletContextListener {
 			if (reader != null)
 				reader.close();
 		}
+	}
+	
+	public void changeLogstoDB(){
+		Settings.LogtoDB();
+		LogtoDB();
+		Server.LogtoDB();
+	}
+	
+	public static void LogtoDB(){
+		LOGGER = new Logging().create(Startup.class.getName(),true); 
 	}
 }

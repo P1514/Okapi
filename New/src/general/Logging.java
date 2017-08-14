@@ -24,22 +24,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Logging {
-	
+
 	private static Connection cnlocal;
-	
-	public Logger create(String classname) {
+
+	public Logger create(String classname, boolean toDB) {
 		Logger LOGGER = Logger.getLogger(classname);
-		DBHandler dh;
-		
-		dh = new DBHandler(1, System.currentTimeMillis());
-		LOGGER.addHandler(dh);
-		SimpleFormatter formatter = new SimpleFormatter();
-		dh.setFormatter(formatter);
+		if (toDB) {
+			DBHandler dh;
+
+			dh = new DBHandler(1, System.currentTimeMillis());
+			LOGGER.addHandler(dh);
+
+			SimpleFormatter formatter = new SimpleFormatter();
+			dh.setFormatter(formatter);
+		}
 		LOGGER.info(classname + "Logger initialized\n");
-		
+
 		return LOGGER;
 	}
-	
+
 	private static void dbconnect() {
 		try {
 			cnlocal = Settings.connlocal();

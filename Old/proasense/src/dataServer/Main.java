@@ -1286,7 +1286,7 @@ private String getParamValueOf(String paramString){
 	public void init() {
 		//ServletContext context = getServletContext();
 		
-		if(SystemUtils.IS_OS_UNIX){
+		if(!SystemUtils.IS_OS_UNIX){
 			logPath = File.separator+"home"
 					+File.separator+"proasense"
 					+File.separator+"proasenseModeller"

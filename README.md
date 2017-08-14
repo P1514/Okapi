@@ -7,9 +7,17 @@ Old -> Proasense Old Project
 
 # ChangeLog
 
+## V0.1.1
+- Implemented Set Up Dialog on First run
+- Implemented XML Settings file with AES encryption
+- Migrated Old DB to Mysql
+- Changed Logger to Start Logging into Console, then change to Database when successfully connected
+
 ## V0.1
 - Created Base Project for Development
-- Classes Included on Base Project, Startup, Errors, Operations, Server, Settings, DBHandler.
+- Classes Included on Base Project, Startup, Errors, Operations, Server, Settings, DBHandler
 - Libraries Included on Base Project, JSON, JDBC Mysql
 - Created Simple Database just to let software run
 - Created Socket Testing Webpage under /SocketTesting.xhtml
+
+
