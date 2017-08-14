@@ -44,7 +44,7 @@ public class XMLEncryption {
 	private static final PrivateKey privKey = getPrivateKey();
 
 	private static PrivateKey getPrivateKey() {
-		PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode("MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAIaCOtGhSLT5w1lC90/qOSLcptI1CizM+ESns5CwCGkfiBJV0P1cBa3pyytMGJLyQ3ZubOFaLg1rgge2OvWJfjxGPXuH01KgA+ve7AgaJc3nSTOWRHpT59OJpjr8bwLWCSk3T/XsHOeYtNiYs3saqXT86dXnbqAAHqGEO7SIvBunAgMBAAECgYEAgXwChWT+qgE59cbKbyrqH85L5VXb2q7iXK0X5jQflJsfEY99JTkd2oKS67ZQfb0sBmlc9T8r0A1rWmMptM7MLnHOFo4DbuedW0DKEDgR597WAbEftNoMf7eumX5XNhvyMrYdXHxVtone8O8DjQYVRPzN/FGKPkH23bOT39ByQgkCQQDGwvjcY4pWUHEhQNzKxYYaoCxjoiHcNNcmCxoQbIVW34VgVInq1PQNHIfsJa66NgZ9ODsevTvcZzdTlLv3NdprAkEArT5uBfxQqjncXrhGlOvpivUgDRDYueqUAay59N1tyuU7S1zIBihdw01Q/JZRyg2LiSw83GUnoR3xjhuz+IGKtQJBAJaXZmHkcQ2QiQY+1Io1ObO2o6shTjI/PrsuMiM7dZMqay1fH9dyXS4J7dm3ezjOcgAxuGlDyrTk5wBGcluMy90CQExlT1dMYLXwNgF++YEKVz5zweKBH1E85G+on4gfbR8f3vnovDwa6N4K5j+8eezD9FhVLbFy2frunWqxRLe9SFECQCqqiIlCD8Qc3bRiZaKozpY8v+xZbyJbpJnApEJB/sZAgzDNV0PKK8RRUwzfWKinfaMOHdMiIAVPOVnXqEn6qm4="));
+		PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode("MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCBvLhQKT9+F+qhN0JmblnST15xywcqCGEEXENiyIjBXz2fmmPa/Io6SajQ/uEB/jDNdAlsQJDfAg+gfSzdmbM6DlTUHn8ToSSClV4eLFPigthlIJb1XhYkhoEZSCeB5V+oTHrqRxdcZagby6mEv2Ez4Y4ZshxRhm2e9CCKyPoF7sNfz0Yar2e87EkcbWqTsu2NE94DCrjfAOF0nv82uuf3jl4XAHLk1syQmMqIRmd+fxrw2hwWWlG2te3VzxXzFvcX94t2DZFefaF2K+deN5qZiziRsnSW6vFpmBigxvGjRY+8dmw9b2ub/OGwH4Ms3uGQyREs6auJgXGQ3W41o/qvAgMBAAECggEATJzSRtwk12RuNOe5+V0fA7fE8PPQ9jxedkG5tWLwhyij7lUwtIe/ZO5Ml6Z73z5pOVpVmiyCoH7KFZ712KLEGPuPknez2Tampcpo+u54VuGnwgg9vQXjk4wuPmzCj82Q8ITBbQmwPOr3G/rnzzFoyEdhL8FjQa1dnKlTckF+i/N6K87eVQu8l0Hp3mueXDxMFBLOoJKqT6fY1GJqhW1zf7hiHplyt8+iYB8TkV+4TjCQyL31/PaST9WdUsCqzdhCl3jhH1bM/0fkduEcAKvZn6gJ4k/RO57cMmegAjfNrPPdYhJx0/AqvmIT2xhkk6fsFT805TECac+vle6sokMvCQKBgQDWZV8ncXNWXc1k6TILYteno5MxCnbGW5Ogcx1czU3q+0QogxSl5NIp9O1RcsUnuq67RMqjo1Be8MRpmTW1Uo4UFIfs3tPMrADm330NjsXU+W28YXRajcXFhtyt9SfGsmgwRmLd7yC8+9/MsPC9/Xv7IExfBQQKsKTfPDmu9RIKEwKBgQCa6bjZR2GW6Vjek0hOJTreS5FrdJIaQMm+5cTSXRiM8wDilqSEddUPaQK0YgKLXcE7ijoyiAEOYyvl2xICF2OpjWKIDXdMEaKuA+30+pSjAAnyrxccQWI9mTCTWI+NBTcHJAA6YZU85K1nCgrmeHT3iZ8ZQHH4inmyg6SOlLEgdQKBgQC24FVgMbeuLekrcHbNm4xUZIUDSeeynx63uDmNlVonXBjxbY5JS3uxakicNwfRMb4l4zHujznZIgqIALX9auPiYPjopdGIPheu12e2DtjVJ8Xg8EftjgzqxnSqtfkt1bRlqURgBr+oNDjcQvm3NedxeEVsr7yY2cBo4thZUpYGnQKBgDQN8YVhjRNu2eQAzb0kmYF1Fypqg2W6+4/gGaEukz9ZsKRzRlkUV0HUYYpHnN9D49ij/CZauTAidu/IC2cUgPLKhZ9+FuZCzs12mJFHWobjTnR0DWn7No3IWiBJFAOpCvKlUEZN4B4UIYiMQVlshLFhV0re8u03aulnfvZCVLq5AoGAcIhkkvxkAx7086xQ7iSsize0Qw+UuNrUTB1BPVNYE2KSNSJs8jeMbJ2bCmLSdEIe/pAbSXLK1RIXgFsOVQwwoDW9zhkGEJHLThOJlTif66NCpCzv/x+45rC0jg+hZ/YRdkGsyTM3/9cj2+yP/7sOiE+6jPmLZRpQS/vn+R1yvuU="));
 		KeyFactory kf;
 		try {
 			kf = KeyFactory.getInstance("RSA");
@@ -58,7 +58,7 @@ public class XMLEncryption {
 
 	private static PublicKey getPublicKey() {
 		X509EncodedKeySpec spec = new X509EncodedKeySpec(Base64.getDecoder()
-				.decode("MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGgjrRoUi0+cNZQvdP6jki3KbSNQoszPhEp7OQsAhpH4gSVdD9XAWt6csrTBiS8kN2bmzhWi4Na4IHtjr1iX48Rj17h9NSoAPr3uwIGiXN50kzlkR6U+fTiaY6/G8C1gkpN0/17BznmLTYmLN7Gql0/OnV526gAB6hhDu0iLwbpwIDAQAB"));
+				.decode("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgby4UCk/fhfqoTdCZm5Z0k9eccsHKghhBFxDYsiIwV89n5pj2vyKOkmo0P7hAf4wzXQJbECQ3wIPoH0s3ZmzOg5U1B5/E6EkgpVeHixT4oLYZSCW9V4WJIaBGUgngeVfqEx66kcXXGWoG8uphL9hM+GOGbIcUYZtnvQgisj6Be7DX89GGq9nvOxJHG1qk7LtjRPeAwq43wDhdJ7/Nrrn945eFwBy5NbMkJjKiEZnfn8a8NocFlpRtrXt1c8V8xb3F/eLdg2RXn2hdivnXjeamYs4kbJ0lurxaZgYoMbxo0WPvHZsPW9rm/zhsB+DLN7hkMkRLOmriYFxkN1uNaP6rwIDAQAB"));
 		KeyFactory kf;
 		try {
 			kf = KeyFactory.getInstance("RSA");
@@ -72,31 +72,16 @@ public class XMLEncryption {
 
 	public static void encrypt(File inputFile, File outputFile) {
 		try {
-			/*KeyPairGenerator keyPGen = KeyPairGenerator.getInstance("RSA");
-			KeyPair kp = keyPGen.generateKeyPair();
-			PrivateKey privKey=kp.getPrivate();
-			System.out.println("PRIV:"+Base64.getEncoder().encodeToString(privKey.getEncoded())+"~~END\n");
-			PublicKey pubKey = kp.getPublic();
-			System.out.println("PUB:"+Base64.getEncoder().encodeToString(pubKey.getEncoded())+"~~END\n");		
-			*/
-			
 			KeyGenerator keyGen = KeyGenerator.getInstance(ALGORITHM);
 			keyGen.init(Key_Length);
 			Key secretKey = keyGen.generateKey();
 			Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");  
-	        cipher.init(Cipher.ENCRYPT_MODE, privKey);
+	        cipher.init(Cipher.ENCRYPT_MODE, pubKey);
 	        System.out.print(secretKey.getEncoded());
 	        byte[] hex = secretKey.getEncoded();
 	        hex = cipher.doFinal(hex);
 	        hex = Base64.getEncoder().encode(hex);
 	        System.out.println(hex.length);
-	        /*
-	        hex = Base64.getDecoder().decode(hex);
-			cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");  
-	        cipher.init(Cipher.DECRYPT_MODE, privKey);
-			hex = cipher.doFinal(hex);
-			System.out.println(hex);
-			*/
 			File f = new File(Settings.directory + "Key.txt");
 			f.delete();
 			f.createNewFile();
@@ -129,12 +114,12 @@ public class XMLEncryption {
 			File f = new File(Settings.directory + "Key.txt");
 
 			FileInputStream fis = new FileInputStream(f);
-			byte[] buffer = new byte[172];
+			byte[] buffer = new byte[344];
 			fis.read(buffer);
 			fis.close();
 			buffer = Base64.getDecoder().decode(buffer);
 			Cipher cipher = Cipher.getInstance("RSA");  
-	        cipher.init(Cipher.DECRYPT_MODE, pubKey);
+	        cipher.init(Cipher.DECRYPT_MODE, privKey);
 			buffer = cipher.doFinal(buffer);
 			Key secretKey = new SecretKeySpec(buffer, ALGORITHM);
 			cipher = Cipher.getInstance(TRANSFORMATION);
