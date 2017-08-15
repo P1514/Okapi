@@ -13,6 +13,7 @@ public class Errors {
 		Errors.put(3, "ERROR(3): Error Saving Settings File");
 		Errors.put(4, "ERROR(4): Error Encrypting File");
 		Errors.put(5, "ERROR(5): Error Decrypting File");
+		Errors.put(6, "ERROR(6): Error While Creating RSA Keys");
 		
 	}
 	
