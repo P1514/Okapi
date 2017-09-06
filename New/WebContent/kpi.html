@@ -1,53 +1,109 @@
 <head>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="js/charts.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="css/main.css" />
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/charts.js"></script>
+<script type="text/javascript" src="js/Chart.HeatMap.S.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 
-  <center>
-    <h2>Real time KPIs</h2>
-    <div class="row">
-      <div id="totalUnitsDiv" class="col-md-4" width="200px;" style="display: inline-block">
-        <p><b>Total units</b></p><br>
-        <p id="totalUnits">1000 (test value)</p>
-      </div>
-      <div id="scrapRateDiv" class="col-md-4" width="200px;" style="display: inline-block">
-        <p><b>Scrap rate</b></p><br>
-        <p id="scrapRate">10 (test value)</p>
-      </div>
-      <div id="oeeDiv" class="col-md-4" width="200px;" style="display: inline-block">
-        <p><b>OEE</b></p><br>
-        <p id="oee">80% (test value)</p>
-      </div>
-    </div>
-    <br><br>
-    <div id="container">
-      <div id="filters" class="row" style="padding-top:10px;">
-        <br>
-        <div id="global" class="col-md-6">
-          <label><input id="globalRadio" name="filter" type="radio"><b>Global</b></label>
-        </div>
-        <div id="product" class="col-md-6">
-          <label><input id="productRadio" name="filter" type="radio"><b>Product</b></label>
-        </div>
-        <div id="machine" class="col-md-6">
-          <label><input id="machineRadio" name="filter" type="radio"><b>Machine</b></label>
-        </div>
-        <div id="shift" class="col-md-6">
-          <label><input id="shiftRadio" name="filter" type="radio"><b>Shift</b></label>
-        </div>
-        <div id="mould" class="col-md-6">
-          <label><input id="mouldRadio" name="filter" type="radio"><b>Mould</b></label>
-        </div>
-      </div>
-      <br>
-      <p><b>Period covered:</b></p>
-      <div id="period">
-        <!--
+	<center>
+		<h2>Real time KPIs</h2>
+		<div class="row">
+			<div id="totalUnitsDiv" class="col-md-4" width="200px;"
+				style="display: inline-block">
+				<p>
+					<b>Total units</b>
+				</p>
+				<br>
+				<p id="totalUnits">1000 (test value)</p>
+			</div>
+			<div id="scrapRateDiv" class="col-md-4" width="200px;"
+				style="display: inline-block">
+				<p>
+					<b>Scrap rate</b>
+				</p>
+				<br>
+				<p id="scrapRate">10 (test value)</p>
+			</div>
+			<div id="oeeDiv" class="col-md-4" width="200px;"
+				style="display: inline-block">
+				<p>
+					<b>OEE</b>
+				</p>
+				<br>
+				<p id="oee">80% (test value)</p>
+			</div>
+		</div>
+		<br> <br>
+		<div id="container">
+			<div id="filters" class="row" style="padding-top: 10px;">
+				<br>
+				<div id="global" class="col-md-6">
+					<label><input id="globalRadio" name="filter" type="radio" checked><b>Global</b></label>
+				</div>
+				<div id="product" class="col-md-6">
+					<label><input id="productRadio" name="filter" type="radio"><b>Product</b></label>
+				</div>
+				<div id="machine" class="col-md-6">
+					<label><input id="machineRadio" name="filter" type="radio"><b>Machine</b></label>
+				</div>
+				<div id="shift" class="col-md-6">
+					<label><input id="shiftRadio" name="filter" type="radio"><b>Shift</b></label>
+				</div>
+				<div id="mould" class="col-md-6">
+					<label><input id="mouldRadio" name="filter" type="radio"><b>Mould</b></label>
+				</div>
+			</div>
+			<div id="dropdowns" class="row" style="padding-top: 10px;">
+				<div id="dummy" class="col-md-6">
+					&nbsp
+				</div>
+				<div id="productDropdown" class="col-md-6">
+					<label><select class="form-control" style="width: 150px;">
+						<option value="Product A">Product A</option>
+						<option value="Product B">Product B</option>
+						<option value="Product C">Product C</option>
+						<option value="Product D">Product D</option>
+						<option value="Product E">Product E</option>
+						<option value="Product F">Product F</option>
+						<option value="Product G">Product G</option>
+					</select> </label>
+				</div>
+				<div id="machineDropdown" class="col-md-6">
+					<label><select class="form-control" style="width: 150px;">
+						<option value="Machine A">Machine A</option>
+						<option value="Machine B">Machine B</option>
+						<option value="Machine C">Machine C</option>
+					</select> </label>
+				</div>
+				<div id="shiftDropdown" class="col-md-6">
+					<label><select class="form-control" style="width: 150px;">
+						<option value="Shift 1">Shift 1</option>
+						<option value="Shift 2">Shift 2</option>
+						<option value="Shift 3">Shift 2</option>
+					</select> </label>
+				</div>
+				<div id="mouldDropdown" class="col-md-6">
+					<label><select class="form-control" style="width: 150px;">
+						<option value="Mould A">Mould A</option>
+						<option value="Mould B">Mould B</option>
+						<option value="Mould C">Mould C</option>
+					</select> </label>
+				</div>
+			</div>
+			<br>
+			<p>
+				<b>Period covered:</b>
+			</p>
+			<div id="period">
+				<!--
         <div class="container">
           <div class='col-md-5'>
             <div class="form-group">
@@ -71,26 +127,31 @@
             </div>
           </div>
         -->
-        <form class="form-inline">
-          <label>From: </label><input class="form-control" id="startDate" type="date" style="width:200px;">
-          <label>To: </label><input class="form-control" id="endDate" type="date" style="width:200px;">
-        </form>
-        <label>Granularity:
-        <select class="form-control" style="width:150px;">
-          <option value="hourly">Hourly</option>
-          <option value="daily">Daily</option>
-          <option value="Monthly">Monthly</option>
-        </select>
-        </label>
-      </div>
-      <div id="lineChart" width="100%">
-      </div>
-      <label class="checkbox-inline"><input id="includeGlobal" type="checkbox" value="">Include global</label>
-      <label class="checkbox-inline"><input id="showPrediction" type="checkbox" value="">Show prediction</label>
-      <br>
-      <button id="update" type="button" style="margin-top:10px;margin-bottom:10px;" class="btn btn-primary">Update</button>
-      <div id="heatMap" width="100%">
-      </div>
-    </div>
-  </center>
+				<form class="form-inline">
+					<label>From: </label><input class="form-control" id="startDate"
+						type="date" style="width: 200px;"> <label>To: </label><input
+						class="form-control" id="endDate" type="date"
+						style="width: 200px;">
+				</form>
+				<label>Granularity: <select class="form-control"
+					style="width: 150px;">
+						<option value="hourly">Hourly</option>
+						<option value="daily">Daily</option>
+						<option value="Monthly">Monthly</option>
+				</select>
+				</label>
+			</div>
+			<div id="lineChart" width="100%"></div>
+			<label class="checkbox-inline"><input id="includeGlobal"
+				type="checkbox" value="">Include global</label> <label
+				class="checkbox-inline"><input id="showPrediction"
+				type="checkbox" value="">Show prediction</label> <br>
+			<button id="update" type="button"
+				style="margin-top: 10px; margin-bottom: 10px;"
+				class="btn btn-primary">Update</button>
+			<div width="100%">
+				<canvas id="heatmap" width="500px" height="400px"></canvas>
+			</div>
+		</div>
+	</center>
 </body>
