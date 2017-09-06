@@ -1,0 +1,31 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+h2 {
+  margin-top: 20px;
+}
+#parent {
+    margin-left: 200px;
+}
+
+#frame {
+  border-style: none;
+}
+
+#totalUnitsDiv, #scrapRateDiv, #oeeDiv {
+  width:33%;
+}
+
+#global, #product, #machine, #shift, #mould {
+  width: 20%;
+}
+
+#container {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  background-color: #F5F5F5;
+}
