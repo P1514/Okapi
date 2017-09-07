@@ -6,6 +6,11 @@ New -> Current Development Project
 Old -> Proasense Old Project
 
 # ChangeLog
+
+## V0.1.1.1
+- Added front-end interface for KPI page
+- Created front end file structure
+
 ## V0.1.1
 - Implemented Set Up Dialog on First run
 - Implemented XML Settings file with AES encryption
