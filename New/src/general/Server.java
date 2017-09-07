@@ -12,6 +12,10 @@ import javax.websocket.OnOpen;
 import javax.websocket.RemoteEndpoint.Async;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Server.
@@ -45,12 +49,15 @@ public class Server {
 	 *            the msg
 	 * @param last
 	 *            the last
+	 * @throws JSONException 
 	 */
 	@OnMessage
-	public void receivedMessage(Session session, String msg, boolean last) {
-
-		//TODO
-
+	public void receivedMessage(Session session, String msg, boolean last) throws JSONException {
+		LOGGER.log(Level.INFO, "\r\nIN: " + msg);
+		
+		JSONObject resolve = new JSONObject(msg);
+		handleMessage(resolve);
+		
 	}
 
 	/**
@@ -76,7 +83,7 @@ public class Server {
 	 * @param msg
 	 *            the msg
 	 */
-	public void send_message(String msg) {
+	public void sendMessage(String msg) {
 		LOGGER.log(Level.INFO, "\r\nOUT: " + msg);
 		as.sendText(msg);
 		return;
@@ -102,5 +109,20 @@ public class Server {
 	
 	public static void LogtoDB(){
 		LOGGER = new Logging().create(Server.class.getName(),true); 
+	}
+	
+	private void handleMessage(JSONObject msg) throws JSONException {
+		JSONArray result = new JSONArray();
+		JSONObject obj = new JSONObject();
+		Backend backend;
+		Operations operations;
+		
+		if (session.isOpen()) {
+			operations = new Operations();
+			int op = operations.getOP(msg.getString("Op"));
+			backend = new Backend(op, msg);
+			
+			sendMessage(backend.resolve());
+		}
 	}
 }
