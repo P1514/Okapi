@@ -23,6 +23,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Class that represents a logger, used to log the state of this application.
+ * @author Fábio Mano
+ *
+ */
 public class Logging {
 
 	private static Connection cnlocal;
