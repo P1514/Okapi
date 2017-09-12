@@ -10,6 +10,15 @@ Old -> Proasense Old Project
 ## V0.1.1.1
 - Added front-end interface for KPI page
 - Created front end file structure
+- Added a sample treemap
+- Websocket added to front ent chart page
+- Created Backend class to resolve messages from the front-end
+- Added test operation that sends random data to the top chart
+- Added method to handle received messages and send them to the Backend class
+- Added DBController class to handle accesses to the database
+- Added comments
+- Filter dropdowns in front end now display data retrieved from the
+database
 
 ## V0.1.1
 - Implemented Set Up Dialog on First run
