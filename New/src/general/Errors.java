@@ -2,6 +2,11 @@ package general;
 
 import java.util.HashMap;
 
+/**
+ * Class that stores error messages.
+ * @author Uninova
+ *
+ */
 public class Errors {
 	
 	private static HashMap<Integer, String> Errors;
