@@ -1,15 +1,9 @@
 package general;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.sql.Date;
 import java.util.logging.ErrorManager;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
-
-import general.Settings;
 
 /**
  * Handler to log output directly to the database.
@@ -17,23 +11,14 @@ import general.Settings;
  */
 public class DBHandler extends Handler {
 
-	private Connection cnlocal;
 	private int user_id;
 	private Timestamp timestamp;
+	private DBController dbc;
 	
 	public DBHandler(int user_id, long timestamp) {
 		this.user_id = user_id;
 		this.timestamp = new Timestamp(timestamp);
-	}
-
-	private boolean dbconnect() {
-		try {
-			cnlocal = Settings.connlocal();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
+		this.dbc = new DBController();
 	}
 
 	/**
@@ -52,38 +37,7 @@ public class DBHandler extends Handler {
 			return;
 		}
 		
-		if(!dbconnect())return;
-
-		String sql = "INSERT INTO " + Settings.ltable + "(" + Settings.ltable_user + "," + Settings.ltable_timestamp
-				+ "," + Settings.ltable_log + ") VALUES (?,?,?)";
-		
-		PreparedStatement insert = null; 
-		
-		try {
-			insert = cnlocal.prepareStatement(sql);
-			insert.setInt(1, user_id);
-			insert.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
-			insert.setString(3, record.getMessage());
-			insert.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (insert != null) {
-					insert.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				if (cnlocal != null) {
-					close();
-				}
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			}
-		}
-	
+		dbc.publishLog(msg, user_id, timestamp);
 	}
 
 	@Override
@@ -97,12 +51,6 @@ public class DBHandler extends Handler {
 	 */
 	@Override
 	public void close() throws SecurityException {
-		try {
-			cnlocal.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		dbc.close();
 	}
-
 }

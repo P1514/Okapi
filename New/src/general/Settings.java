@@ -82,12 +82,69 @@ public class Settings {
 	 * ="inknowOkapi!";
 	 */
 
+	// Granularity table
+	public static final String gtable = "granularity";
+	public static final String gtable_id = "ID";
+	public static final String gtable_name = "NAME";
+
+	// KPI Table
+	public static final String ktable = "kpi";
+	public static final String ktable_parent = "PARENT_ID";
+	public static final String ktable_name = "NAME";
+	public static final String ktable_description = "DESCRIPTION";
+	public static final String ktable_sampling_rate = "SAMPLING_RATE";
+	public static final String ktable_sampling_interval = "SAMPLING INTERVAL";
+	public static final String ktable_context_product = "CONTEXT_PRODUCT";
+	public static final String ktable_context_machine = "CONTEXT_MACHINE";
+	public static final String ktable_context_mould = "CONTEXT_MOULD";
+	public static final String ktable_context_shift = "CONTEXT_SHIFT";
+	public static final String ktable_calculation_type = "CALCULATION_TYPE";
+	public static final String ktable_aggregation = "AGGREGATION";
+	public static final String ktable_number_support = "NUMBER_SUPPORT";
+	public static final String ktable_number_support_format = "NUMBER_SUPPORT_FORMAT";
+	public static final String ktable_active = "ACTIVE";
+	public static final String ktable_company_context = "COMPANY_CONTEXT";
+
 	// Logger Table
 	public static final String ltable = "logs";
 	public static final String ltable_id = "logs_id";
 	public static final String ltable_user = "user_id";
 	public static final String ltable_timestamp = "timestamp";
 	public static final String ltable_log = "message";
+
+	// Machine table
+	public static final String mtable = "machine";
+	public static final String mtable_id = "ID";
+	public static final String mtable_name= "NAME";
+
+	// Mould table
+	public static final String mldtable = "mould";
+	public static final String mldtable_id = "ID";
+	public static final String mldtable_product_id = "PRODUCT_ID";
+	public static final String mldtable_name = "NAME";
+	public static final String mldtable_cycle = "CYCLE";
+	public static final String mldtable_code = "CODE";
+
+	// Product table
+	public static final String ptable = "product";
+	public static final String ptable_id = "ID";
+	public static final String ptable_name = "NAME";
+	public static final String ptable_code = "CODE";
+
+	// Shift table
+	public static final String stable = "shift";
+	public static final String stable_id = "ID";
+	public static final String stable_name = "NAME";
+
+	// KPI IDs
+	public static final int COUNT = 1;
+	public static final int GOOD_PARTS = 2;
+	public static final int SCRAPPED_PARTS = 3;
+	public static final int SCRAP_RATE = 4;
+	public static final int AVAILABILITY = 5;
+	public static final int PERFORMANCE = 6;
+	public static final int QUALITY = 7;
+	public static final int OEE = 8;
 
 	/**
 	 * Connlocal.
@@ -174,11 +231,11 @@ public class Settings {
 		Element e = null;
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		String file = directory + "Settings.xml";
-		
+
 		try {
 			new File(Settings.directory).mkdirs();
 			new File(file).createNewFile();
-			
+
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			dom = db.newDocument();
 
@@ -224,7 +281,7 @@ public class Settings {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	protected static params readXML() {
 
 		String file = directory + "Settings.xml";
@@ -237,9 +294,10 @@ public class Settings {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			if(!(new File(file).exists())) throw new Exception();
+			if (!(new File(file).exists()))
+				throw new Exception();
 			byte[] filearray = null;
-			filearray=XMLEncryption.decrypt(new File(file));
+			filearray = XMLEncryption.decrypt(new File(file));
 			ByteInputStream bis = new ByteInputStream(filearray, filearray.length);
 			dom = db.parse(bis);
 			Element doc = dom.getDocumentElement();
