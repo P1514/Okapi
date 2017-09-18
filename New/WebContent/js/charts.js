@@ -63,10 +63,7 @@ ws.onmessage = function(event) {
 	if (request[0].Op == "shifts") {
 		setOptions('shiftSelect', request);
 
-		var json = {
-			'Op' : 'testing'
-		};
-		ws.send(JSON.stringify(json));
+		updateCharts();
 	}
 };
 
@@ -75,8 +72,81 @@ google.charts.load('current', {
 });
 google.charts.setOnLoadCallback(requestCharts);
 
+$(document).ready(function() {
+  $('input[type=radio][name=filter]').change(function() {
+    if (this.value == 'product') {
+      $('#productSelect').show();
+			$('#machineSelect').hide();
+			$('#shiftSelect').hide();
+			$('#mouldSelect').hide();
+    }
+    else if (this.value == 'machine') {
+			$('#productSelect').hide();
+			$('#machineSelect').show();
+			$('#shiftSelect').hide();
+			$('#mouldSelect').hide();
+    }
+		else if (this.value == 'shift') {
+			$('#productSelect').hide();
+			$('#machineSelect').hide();
+			$('#shiftSelect').show();
+			$('#mouldSelect').hide();
+    }
+		else if (this.value == 'mould') {
+			$('#productSelect').hide();
+			$('#machineSelect').hide();
+			$('#shiftSelect').hide();
+			$('#mouldSelect').show();
+    }
+		else if (this.value == 'global') {
+			$('#productSelect').hide();
+			$('#machineSelect').hide();
+			$('#shiftSelect').hide();
+			$('#mouldSelect').hide();
+		}
+	});
+});
+
 function requestCharts() {
 	console.log('Google charts loaded')
+}
+
+function updateCharts() {
+	var filter = $('input[name=filter]:checked').val();
+	var option = undefined;
+
+	if (filter != 'global') {
+		option = getOption(filter + 'Select');
+	}
+
+	var startDate = $('#startDate').val();
+	var endDate = $('#endDate').val();
+
+	if (startDate != undefined && endDate != undefined) { // if start date is later than end date, dates are ignored and the full timespan is shown
+		if (new Date(startDate).getTime() > new Date(endDate).getTime()) {
+			startDate = undefined;
+			endDate = undefined;
+		}
+	}
+
+	var json = {
+		'Op' : 'getScrapChart',
+		'Product' : filter == 'product' ? option : undefined,
+		'Machine' : filter == 'machine' ? option : undefined,
+		'Shift' : filter == 'shift' ? option : undefined,
+		'Mould' : filter == 'mould' ? option : undefined,
+		'StartDate' : startDate != '' ? startDate : undefined,
+		'EndDate' : endDate != '' ? endDate : undefined,
+		'Granularity' : getOption('granularity'),
+		'Prediction' : document.getElementById('showPrediction').checked,
+		'Global' : document.getElementById('includeGlobal').checked
+	};
+
+	ws.send(JSON.stringify(json));
+}
+
+function getOption(id) {
+	return $('#' + id).val();
 }
 
 function setOptions(id, options) {
@@ -164,12 +234,3 @@ function drawChart() {
 	var newChart = new Chart(ctx).HeatMap(data, options);
 
 }
-
-/*
- * $(function () { $('#startDate').datetimepicker();
- * $('#endDate').datetimepicker({ useCurrent: false });
- * $("#startDate").on("dp.change", function (e) {
- * $('#endDate').data("DateTimePicker").minDate(e.date); });
- * $("#endDate").on("dp.change", function (e) {
- * $('#startDate').data("DateTimePicker").maxDate(e.date); }); });
- */

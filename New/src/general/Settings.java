@@ -146,6 +146,13 @@ public class Settings {
 	public static final int QUALITY = 7;
 	public static final int OEE = 8;
 
+	// Filter types
+	public static final int TYPE_GLOBAL = 0;
+	public static final int TYPE_PRODUCT = 1;
+	public static final int TYPE_MACHINE = 2;
+	public static final int TYPE_SHIFT = 3;
+	public static final int TYPE_MOULD = 4;
+	
 	/**
 	 * Connlocal.
 	 *
