@@ -10,4 +10,8 @@ public class ScrapChart {
 		// TODO Auto-generated constructor stub
 	}
 
+	public String getChart() {
+		return "hey!";
+	}
+	
 }

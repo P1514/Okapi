@@ -18,13 +18,7 @@ ws.onopen = function() {
 };
 
 ws.onmessage = function(event) {
-	var request = JSON.parse(event.data.replace(/\\/g, '')); // used to
-	// remove extra
-	// brackets in
-	// diversity,
-	// check this if
-	// json seems
-	// incorrect
+	var request = JSON.parse(event.data.replace(/\\/g, '')); // used to remove extra brackets in diversity, check this if json seems incorrect
 
 	// check OPs in each request
 	if (request[0].Op == "top_chart") {
@@ -72,6 +66,7 @@ google.charts.load('current', {
 });
 google.charts.setOnLoadCallback(requestCharts);
 
+//toggle dropdowns when radio buttons are selected, and hide them when they're not (refactor?)
 $(document).ready(function() {
   $('input[type=radio][name=filter]').change(function() {
     if (this.value == 'product') {
@@ -111,12 +106,13 @@ function requestCharts() {
 	console.log('Google charts loaded')
 }
 
+// called when page is loaded and when the Update button is pressed
 function updateCharts() {
-	var filter = $('input[name=filter]:checked').val();
+	var filter = $('input[name=filter]:checked').val(); // gets the name of the selected radio button
 	var option = undefined;
 
 	if (filter != 'global') {
-		option = getOption(filter + 'Select');
+		option = getOption(filter + 'Select'); // if the filter is not global, get the selected option from the respective dropdown
 	}
 
 	var startDate = $('#startDate').val();
@@ -145,10 +141,12 @@ function updateCharts() {
 	ws.send(JSON.stringify(json));
 }
 
+//returns the selected option from any given dropdown id
 function getOption(id) {
 	return $('#' + id).val();
 }
 
+//adds options to a dropdown list
 function setOptions(id, options) {
 	for (var i = 0; i < options.length; i++) {
 		if (!options[i].hasOwnProperty('Op')) {
