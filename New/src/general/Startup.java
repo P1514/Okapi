@@ -9,6 +9,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import file_manager.fileLoader;
+
 
 
 /**
@@ -58,6 +60,7 @@ public class Startup implements ServletContextListener {
 		Settings.LogtoDB();
 		LogtoDB();
 		Server.LogtoDB();
+		fileLoader.LogtoDB();
 	}
 	
 	public static void LogtoDB(){
