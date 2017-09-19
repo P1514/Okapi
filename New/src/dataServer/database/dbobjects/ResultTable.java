@@ -3,13 +3,16 @@ package dataServer.database.dbobjects;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import dataServer.database.enums.SamplingInterval;
 import dataServer.database.enums.TableValueType;
+import general.Errors;
+import general.Logging;
 
 public class ResultTable {
 	SamplingInterval samplingInterval = SamplingInterval.NONE;
@@ -27,6 +30,7 @@ public class ResultTable {
 	
 	public ArrayList<ResultTableElement> resultsRows = new ArrayList<ResultTableElement>();
 	
+	private static Logger LOGGER = new Logging().create(ResultTable.class.getName(), false);
 	public ResultTable(){
 		
 	}
@@ -314,7 +318,6 @@ public class ResultTable {
 	
 	public Object toJSonObject(){
 		Object jsonObject = new JSONObject();
-		JSONParser parser = new JSONParser();
 		String temp = "[";
 		for (int i = 0; i<resultsRows.size();i++) {
 			temp += resultsRows.get(i).toJSonObject()+",";
@@ -322,17 +325,15 @@ public class ResultTable {
 		temp = temp.substring(0, temp.length()-1);
 		temp +="]";
 		try {
-			jsonObject = parser.parse(temp);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			jsonObject = new JSONObject(temp);
+		} catch (JSONException e) {
+			LOGGER.log(Level.WARNING, Errors.getError(9));
 		}
 		return jsonObject;
 	}
 	
 	public Object toJSonObject(Integer column, String[] rowsRefStr){
 		Object jsonObject = new JSONObject();
-		JSONParser parser = new JSONParser();
 		String[] tempStr = new String[rowsRefStr.length];
 		Integer refPos = -1; 
 		String titleValue = "";
@@ -353,26 +354,23 @@ public class ResultTable {
 		
 		
 		try {
-			jsonObject = parser.parse(Arrays.toString(tempStr));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			jsonObject = new JSONObject(Arrays.toString(tempStr));
+		} catch (JSONException e) {
+			LOGGER.log(Level.WARNING, Errors.getError(9));
 		}
 		return jsonObject;
 	}
 	
 	public Object toJsonObjectLegend(){
 		Object jsonObject = new JSONObject();
-		JSONParser parser = new JSONParser();
 		String tempLegend = "[null]";
 		
 		tempLegend = "\"" + resultsRows.get(0).toJSonObject(1) + "\"";
 		
 		try {
-			jsonObject = "\"" +parser.parse(tempLegend)+"\"";
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			jsonObject = "\"" +new JSONObject(tempLegend)+"\"";
+		} catch (JSONException e) {
+			LOGGER.log(Level.WARNING, Errors.getError(9));
 		}
 		
 		return jsonObject;

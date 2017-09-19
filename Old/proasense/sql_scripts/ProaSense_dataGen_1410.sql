@@ -1,3 +1,4 @@
+delete from kpi_values;
 INSERT INTO kpi_values (id, kpi_timestmp, kpi_id, machine_id, product_id, mould_id, shift_id, granularity_id, kpi_value) VALUES (DEFAULT,'2014-10-01 06:00:00',1,1,15,21,1,4,82.0); 
 INSERT INTO kpi_values (id, kpi_timestmp, kpi_id, machine_id, product_id, mould_id, shift_id, granularity_id, kpi_value) VALUES (DEFAULT,'2014-10-01 07:00:00',1,1,15,21,1,4,82.0); 
 INSERT INTO kpi_values (id, kpi_timestmp, kpi_id, machine_id, product_id, mould_id, shift_id, granularity_id, kpi_value) VALUES (DEFAULT,'2014-10-01 08:00:00',1,1,15,21,1,4,82.0); 

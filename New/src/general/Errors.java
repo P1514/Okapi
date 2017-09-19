@@ -20,6 +20,9 @@ public class Errors {
 		Errors.put(5, "ERROR(5): Error Decrypting File");
 		Errors.put(6, "ERROR(6): Error While Creating RSA Keys");
 		Errors.put(7, "ERROR(7): Error While Adding new Data into Database");
+		Errors.put(8, "ERROR(8): Error Creating JSON for HeatMap");
+		Errors.put(9, "ERROR(9): Error Creating JSON for ResultTable");
+		Errors.put(10, "ERROR(10): Error Creating JSON for ResultTableElement");
 		
 	}
 	

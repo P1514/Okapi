@@ -1,17 +1,21 @@
 package dataServer.database.dbobjects;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import dataServer.database.enums.TableValueType;
+import general.Errors;
+import general.Logging;
 
 public class ResultTableElement extends KpiDataObject {
 	
 	public String[] columnValues;
 	
 	TableValueType tableValueType; 
-	
+	private static Logger LOGGER = new Logging().create(ResultTableElement.class.getName(), false);
 	public ResultTableElement(String tableName) {
 		super(tableName);
 		// TODO Auto-generated constructor stub
@@ -36,8 +40,8 @@ public class ResultTableElement extends KpiDataObject {
 	
 	@Override
 	public Object toJSonObject(){
-		Object jsonObject = new JSONObject();
-		JSONParser parser = new JSONParser();
+		JSONObject jsonObject = new JSONObject();
+		
 		String temp = "[";
 		for (int i = 0; i<columnValues.length;i++) {
 			temp += "\""+columnValues[i]+"\",";
@@ -47,27 +51,25 @@ public class ResultTableElement extends KpiDataObject {
 
 		temp +="]";
 		try {
-			jsonObject = parser.parse(temp);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			jsonObject = new JSONObject(temp);
+		} catch (JSONException e) {
+			LOGGER.log(Level.WARNING, Errors.getError(10));
 		}
 		return jsonObject;
 	}
 	
 	public Object toJSonObject(Integer column){
 		Object jsonObject = new JSONObject();
-		JSONParser parser = new JSONParser();
+		
 		String temp = "";
 		
 		temp += "\""+columnValues[column-1]+"\"";
 			
 		
 		try {
-			jsonObject = parser.parse(temp);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			jsonObject = new JSONObject(temp);
+		} catch (JSONException e) {
+			LOGGER.log(Level.WARNING, Errors.getError(10));
 		}
 		return jsonObject;
 	}
