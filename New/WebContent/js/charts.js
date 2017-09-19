@@ -10,7 +10,11 @@ if (window.location.href.indexOf('https://') != -1) {
 }
 
 ws.onopen = function() {
-	console.log('Socket is open');
+	var json = {
+		'Op' : 'getProducts'
+	};
+
+	ws.send(JSON.stringify(json));
 };
 
 ws.onmessage = function(event) {
@@ -28,6 +32,42 @@ ws.onmessage = function(event) {
 		values = request;
 		drawChart();
 	}
+
+	if (request[0].Op == "products") {
+		setOptions('productSelect', request);
+
+		var json = {
+			'Op' : 'getMachines'
+		};
+		ws.send(JSON.stringify(json));
+	}
+
+	if (request[0].Op == "machines") {
+		setOptions('machineSelect', request);
+
+		var json = {
+			'Op' : 'getMoulds'
+		};
+		ws.send(JSON.stringify(json));
+	}
+
+	if (request[0].Op == "moulds") {
+		setOptions('mouldSelect', request);
+
+		var json = {
+			'Op' : 'getShifts'
+		};
+		ws.send(JSON.stringify(json));
+	}
+
+	if (request[0].Op == "shifts") {
+		setOptions('shiftSelect', request);
+
+		var json = {
+			'Op' : 'testing'
+		};
+		ws.send(JSON.stringify(json));
+	}
 };
 
 google.charts.load('current', {
@@ -36,11 +76,18 @@ google.charts.load('current', {
 google.charts.setOnLoadCallback(requestCharts);
 
 function requestCharts() {
-	var json = {
-		'Op' : 'testing'
-	};
+	console.log('Google charts loaded')
+}
 
-	ws.send(JSON.stringify(json));
+function setOptions(id, options) {
+	for (var i = 0; i < options.length; i++) {
+		if (!options[i].hasOwnProperty('Op')) {
+	    $('#' + id).append($('<option/>', {
+	      value: options[i].Value,
+	      text: options[i].Value
+	    }));
+		}
+	}
 }
 
 function drawChart() {
@@ -64,14 +111,11 @@ function drawChart() {
 
 	var options = {
 		title : 'Scrap rate',
-		vAxis : {
-			format : '#%'
-		},
 		backgroundColor : '#F5F5F5',
 		curveType : 'function',
 		pointSize : 5,
 		colors : [ '#24292e' ]
-	}
+	};
 
 	var chart = new google.visualization.LineChart(document
 			.getElementById('lineChart'));
@@ -79,26 +123,26 @@ function drawChart() {
 
 	// Heatmap (bottom)
 
-	var data = {
+	data = {
 		labels : [ 'Shift 1', 'Shift 2', 'Shift 3' ],
 		datasets : [ {
 			label : 'Product A',
-			data : [ 3, 4, 1 ]
+			data : [ 3.5, 4.2, 1 ]
 		}, {
 			label : 'Product B',
-			data : [ 1, 7, 5 ]
+			data : [ 1.5, 7, 5 ]
 		}, {
 			label : 'Product C',
-			data : [ 2, 1, 1 ]
+			data : [ 2, 1, 1.5]
 		}, {
 			label : 'Product D',
-			data : [ 3, 5, 1 ]
+			data : [ 3, 5.5, 1 ]
 		}, {
 			label : 'Product E',
-			data : [ 2, 0, 1 ]
+			data : [ 0.5, 0, 1.5 ]
 		}, {
 			label : 'Product F',
-			data : [ 2, 1, 1 ]
+			data : [ 2, 1.5, 1 ]
 		}, {
 			label : 'Product G',
 			data : [ 2, 3, 1 ]
@@ -114,7 +158,8 @@ function drawChart() {
 		colorHighlightMultiplier : 0.80,
 		highlightStrokeColor : "rgb(192,192,192)",
 		labelScale : 0.35
-	}
+	};
+
 	var ctx = document.getElementById('heatmap').getContext('2d');
 	var newChart = new Chart(ctx).HeatMap(data, options);
 
