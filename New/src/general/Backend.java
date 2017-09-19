@@ -1,11 +1,16 @@
 package general;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import charts.*;
 
 /**
  * Class that processes operations and returns the output, if it exists, in a stringified JSON format.
@@ -23,7 +28,7 @@ public class Backend {
 		this.msg = msg;
 	}
 
-	public String resolve() throws JSONException {
+	public String resolve() throws JSONException, ParseException {
 		JSONArray result = new JSONArray();
 		JSONObject obj = new JSONObject();
 		DBController dbc = new DBController();
@@ -49,7 +54,7 @@ public class Backend {
 			}
 			
 			break;
-		case 1:
+		case 1: // getTotal
 			dbc = new DBController();
 			obj = new JSONObject();
 			obj.put(OP, "total_units");
@@ -63,7 +68,7 @@ public class Backend {
 			result.put(obj);
 			
 			return result.toString();
-		case 2:
+		case 2: // getScrapRate
 			dbc = new DBController();
 			obj = new JSONObject();
 			obj.put(OP, "scrap_rate");
@@ -77,7 +82,7 @@ public class Backend {
 			result.put(obj);
 			
 			return result.toString();
-		case 3: 
+		case 3: //getOEE
 			dbc = new DBController();
 			obj = new JSONObject();
 			obj.put(OP, "oee");
@@ -91,7 +96,7 @@ public class Backend {
 			result.put(obj);
 			
 			return result.toString();
-		case 4: 
+		case 4: // getProducts
 			dbc = new DBController();
 			obj = new JSONObject();
 			obj.put(OP, "products");
@@ -107,7 +112,7 @@ public class Backend {
 			}
 			
 			return result.toString();
-		case 5:
+		case 5: // getMachines
 			dbc = new DBController();
 			obj = new JSONObject();
 			obj.put(OP, "machines");
@@ -123,7 +128,7 @@ public class Backend {
 			}
 			
 			return result.toString();
-		case 6: 
+		case 6: // getShifts
 			dbc = new DBController();
 			obj = new JSONObject();
 			obj.put(OP, "shifts");
@@ -139,7 +144,7 @@ public class Backend {
 			}
 			
 			return result.toString();
-		case 7:
+		case 7: // getMoulds
 			dbc = new DBController();
 			obj = new JSONObject();
 			obj.put(OP, "moulds");
@@ -155,11 +160,41 @@ public class Backend {
 			}
 			
 			return result.toString();
-		case 8:
+		case 8: // getScrapChart
+			int type = Settings.TYPE_GLOBAL;
+			String filter = null;
+			Date startDate = null;
+			Date endDate = null;
+			
+			if (msg.has("Product")) {
+				type = Settings.TYPE_PRODUCT;
+				filter = msg.getString("Product");
+			} else if (msg.has("Machine")) {
+				type = Settings.TYPE_MACHINE;
+				filter = msg.getString("Machine");
+			} else if (msg.has("Shift")) {
+				type = Settings.TYPE_SHIFT;
+				filter = msg.getString("Shift");
+			} else if (msg.has("Mould")) {
+				type = Settings.TYPE_MOULD;
+				filter = msg.getString("Mould");
+			}
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			
+			if (msg.has("StartDate")) {
+				startDate = sdf.parse(msg.getString("StartDate"));
+			}
+			
+			if (msg.has("EndDate")) {
+				endDate = sdf.parse(msg.getString("EndDate"));
+			}
+			
+			ScrapChart chart = new ScrapChart(type, filter, startDate, startDate, msg.getBoolean("Prediction"), msg.getBoolean("Global"));
+			return chart.getChart();
+		case 9: // getHeatmap
 			break;
-		case 9:
-			break;
-		case 10:
+		case 10: // getPrediction
 			break;
 		default:
 			obj = new JSONObject();

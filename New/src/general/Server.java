@@ -2,6 +2,7 @@
 package general;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,9 +51,10 @@ public class Server {
 	 * @param last
 	 *            the last
 	 * @throws JSONException 
+	 * @throws ParseException 
 	 */
 	@OnMessage
-	public void receivedMessage(Session session, String msg, boolean last) throws JSONException {
+	public void receivedMessage(Session session, String msg, boolean last) throws JSONException, ParseException {
 		LOGGER.log(Level.INFO, "\r\nIN: " + msg);
 		
 		JSONObject resolve = new JSONObject(msg);
@@ -111,7 +113,7 @@ public class Server {
 		LOGGER = new Logging().create(Server.class.getName(),true); 
 	}
 	
-	private void handleMessage(JSONObject msg) throws JSONException {
+	private void handleMessage(JSONObject msg) throws JSONException, ParseException {
 		JSONArray result = new JSONArray();
 		JSONObject obj = new JSONObject();
 		Backend backend;
