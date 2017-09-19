@@ -15,17 +15,18 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import objects.Kpi;
-import objects.KpiAggType;
-import objects.KpiDataObject;
-import objects.KpiFormula;
-import objects.KpiTarget;
-import objects.KpiValues;
-import objects.Machine;
-import objects.Mould;
-import objects.Product;
-import objects.Sensor;
-import objects.TableValueType;
+import dataServer.database.dbobjects.Kpi;
+import dataServer.database.dbobjects.KpiAggType;
+import dataServer.database.dbobjects.KpiDataObject;
+import dataServer.database.dbobjects.KpiFormula;
+import dataServer.database.dbobjects.KpiTarget;
+import dataServer.database.dbobjects.KpiValues;
+import dataServer.database.dbobjects.Machine;
+import dataServer.database.dbobjects.Mould;
+import dataServer.database.dbobjects.Product;
+import dataServer.database.dbobjects.Sensor;
+import dataServer.database.enums.TableValueType;
+import general.DBController;
 import general.Logging;
 import general.Server;
 import general.Settings;
@@ -135,7 +136,7 @@ public class fileLoader {
 	}
 	
 	private boolean flushBuffer(ArrayList<KpiDataObject> buffer) {
-		return dAO.insertBatchData(buffer);
+		return new DBController().insertBatchData(buffer);
 	}
 
 	private Timestamp getTimestampValue(String timestampValue) {
@@ -162,9 +163,9 @@ public class fileLoader {
 		Integer foreignKeyId  = auxiliarIds.get(valueName);
 		
 		if (foreignKeyId == null) {
-			foreignKeyId = dAO.getForeignKeyId(tableName, foreignKey, valueName);
+			foreignKeyId = new DBController().getForeignKeyId(tableName, foreignKey, valueName);
 			if ( (foreignKeyId == 0) || (foreignKeyId == null) ) {
-				log.saveToFile("id for <"+valueName+"> = <"+foreignKeyId+">");
+				LOGGER.log(Level.INFO,"id for <"+valueName+"> = <"+foreignKeyId+">");
 			}
 			auxiliarIds.put(valueName, foreignKeyId);
 		}
@@ -179,7 +180,7 @@ public class fileLoader {
 		Integer id = auxiliarIds.get(valueName);
 		
 		if (id == null) {
-			id = dAO.getNameId(tableName, valueName);
+			id = new DBController().getNameId(tableName, valueName);
 			auxiliarIds.put(valueName, id);
 		}
 		

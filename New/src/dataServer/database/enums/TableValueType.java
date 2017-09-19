@@ -1,4 +1,4 @@
-package objects;
+package dataServer.database.enums;
 
 public enum TableValueType {
 	PRODUCT,

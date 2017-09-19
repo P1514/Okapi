@@ -19,6 +19,7 @@ public class Errors {
 		Errors.put(4, "ERROR(4): Error Encrypting File");
 		Errors.put(5, "ERROR(5): Error Decrypting File");
 		Errors.put(6, "ERROR(6): Error While Creating RSA Keys");
+		Errors.put(7, "ERROR(7): Error While Adding new Data into Database");
 		
 	}
 	

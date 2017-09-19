@@ -1,4 +1,4 @@
-package objects;
+package dataServer.database.dbobjects;
 
 import java.util.Arrays;
 

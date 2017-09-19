@@ -46,11 +46,9 @@ public class DBHandler extends Handler {
 		return;
 	}
 
-	/**
-	 * Closes the connection.
-	 */
 	@Override
 	public void close() throws SecurityException {
-		dbc.close();
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1,4 +1,4 @@
-package objects;
+package dataServer.database.dbobjects;
 
 import dataServer.database.enums.SamplingInterval;
 

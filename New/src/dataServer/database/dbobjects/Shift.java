@@ -1,18 +1,18 @@
-package objects;
+package dataServer.database.dbobjects;
 
 import java.util.Arrays;
 
-public class Machine extends KpiDataObject {
+public class Shift extends KpiDataObject {
 	public String name;
 	
-	public Machine() {
-		super("machine");
+	public Shift() {
+		super("shift");
 		super.columnsNames.addAll(Arrays.asList("name"));
 	}
 
 	@Override
 	public void loadContents(String[] contents) {
-		name = "'"+contents[1]+"'";
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -20,11 +20,11 @@ public class Machine extends KpiDataObject {
 	public Object getColumnValue(String column) {
 		Object columnObj = null;
 		switch (column) {
-			case "id": 	 columnObj = super.id; 
-						 break;
-			case "name": columnObj = name;
-						 break;
-			default: 	 break;
+			case "id": 	 	   columnObj = super.id; 
+						 	   break;
+			case "name": 	   columnObj = name;
+						 	   break;
+			default: 	 	   break;
 		}
 		return columnObj;
 	}
