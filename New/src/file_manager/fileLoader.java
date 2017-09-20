@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 import dataServer.database.dbobjects.Kpi;
 import dataServer.database.dbobjects.KpiAggType;
 import dataServer.database.dbobjects.KpiDataObject;
@@ -65,6 +67,8 @@ public class fileLoader {
 	
 	private KpiDataObject processLine(String[] lineValues, TableValueType table){
 //		KpiValues kpiValue = new KpiValues();
+		//TODO finish file import
+		HSSFWorkbook file;
 		
 		KpiDataObject kpiDO = null;
 		switch (table) {
