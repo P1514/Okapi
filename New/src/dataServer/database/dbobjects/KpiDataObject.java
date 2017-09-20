@@ -18,7 +18,7 @@ public abstract class KpiDataObject {
 		return this.tableName;
 	}
 	
-	public abstract void loadContents(String[] contents);
+	public abstract boolean loadContents(String[] contents);
 	public abstract Object getColumnValue(String column);
 	public abstract Object toJSonObject();
 	

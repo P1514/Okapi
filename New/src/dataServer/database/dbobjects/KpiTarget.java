@@ -16,11 +16,6 @@ public class KpiTarget extends KpiDataObject {
 		super.columnsNames.addAll(Arrays.asList("kpi_id","product_id", "mould_id","machine_id","shift_id", "lower_bound","upper_bound"));
 	}
 
-	@Override
-	public void loadContents(String[] contents) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public Object getColumnValue(String column) {
@@ -51,5 +46,12 @@ public class KpiTarget extends KpiDataObject {
 	public Object toJSonObject() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public boolean loadContents(String[] contents) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

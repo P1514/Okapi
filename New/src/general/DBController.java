@@ -78,8 +78,9 @@ public class DBController {
 					result.add(rs.getString(1));
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, Errors.getError(11) + "/"+sql+"/");
+			return null;
 		}
 		return result;
 	}
@@ -99,8 +100,9 @@ public class DBController {
 					result.add(rs.getString(1));
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, Errors.getError(11) + "/"+sql+"/");
+			return null;
 		}
 		return result;
 	}
@@ -120,10 +122,11 @@ public class DBController {
 					result.add(rs.getString(1));
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, Errors.getError(11) + "/"+sql+"/");
+			return null;
 		}
-		;
+		
 		return result;
 	}
 
@@ -142,8 +145,9 @@ public class DBController {
 					result.add(rs.getString(1));
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, Errors.getError(11) + "/"+sql+"/");
+			return null;
 		}
 		return result;
 	}
@@ -173,7 +177,8 @@ public class DBController {
 				insert.setString(3, log);
 				insert.executeUpdate();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.log(Level.SEVERE, Errors.getError(11) + "/"+sql+"/");
+				return false;
 			}
 			return true;
 		} else {
@@ -194,57 +199,10 @@ public class DBController {
 				id = (int) queryResult.getObject(1);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, Errors.getError(11) + "/"+sql+"/");
+			return null;
 		}
 		return id;
-	}
-
-	private ArrayList<String> prepareInsertQuery(ArrayList<KpiDataObject> buffer) {
-		// create insert query string
-
-		String columnNames = "";
-		String values = "";
-		ArrayList<String> queryList = new ArrayList<>();
-		// int id = getMaxId("kpi_values");
-
-		for (KpiDataObject kpiValue : buffer) {
-			// columnNames = "\"id\", ";
-			// values = (++id) + ", ";
-			columnNames = "";
-			values = "";
-			for (String col : kpiValue.columnsNames) {
-				columnNames += "\"" + col + "\", ";
-				values += kpiValue.getColumnValue(col) + ", ";
-			}
-			columnNames = columnNames.substring(0, columnNames.length() - 2);
-			values = values.substring(0, values.length() - 2);
-			// queryList.add("INSERT INTO \""+kpiValue.tableName+"\" ("+columnNames+")
-			// VALUES ("+values+");");
-			queryList.add("INSERT INTO \"" + kpiValue.tableName.toUpperCase() + "\" (" + columnNames.toUpperCase()
-					+ ") VALUES (" + values + ");");
-		}
-
-		return queryList;
-	}
-
-	public boolean insertBatchData(ArrayList<KpiDataObject> buffer) {
-
-		ArrayList<String> batchQuery = prepareInsertQuery(buffer);
-		try (Connection cnlocal = Settings.connlocal()) {
-			try (Statement s = cnlocal.createStatement();) {
-				for (String query : batchQuery) {
-					s.executeQuery(query);
-				}
-			} catch (SQLException e) {
-				cnlocal.rollback();
-				LOGGER.log(Level.SEVERE, Errors.getError(7));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return true;
-
 	}
 
 	public Integer getForeignKeyId(String tableName, String foreignKeyName, String valueName) {

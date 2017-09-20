@@ -61,45 +61,6 @@ public class fileLoader {
 		Integer readCount = 0;		
 		ArrayList<KpiDataObject> buffer = new ArrayList<KpiDataObject>();
 		
-		try {
-			bufReader = new BufferedReader(new FileReader(csvFullPath));
-			while ((dataLine = bufReader.readLine()) != null) {
-				String[] lineValues = dataLine.split(valueSeparator);
-				
-				buffer.add(processLine(lineValues, table));
-				
-				if ((buffer.size() % bufferSize) == 0){
-					if (flushBuffer(buffer)){
-						buffer.clear();
-						readCount++;
-					}
-				}
-				
-			}
-			totalLines += (readCount)*bufferSize;
-			
-			if (!buffer.isEmpty()){
-				totalLines += buffer.size();
-				flushBuffer(buffer);
-			}
-			fileLines = (readCount)*bufferSize + buffer.size();
-			
-		LOGGER.log(Level.INFO,("Flushed "+fileLines+"/"+totalLines+" lines for "+csvFile));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (bufReader != null) {
-				try {
-					bufReader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 	
 	private KpiDataObject processLine(String[] lineValues, TableValueType table){
@@ -133,10 +94,6 @@ public class fileLoader {
 		kpiDO.loadContents(lineValues);
 		
 		return kpiDO;
-	}
-	
-	private boolean flushBuffer(ArrayList<KpiDataObject> buffer) {
-		return new DBController().insertBatchData(buffer);
 	}
 
 	private Timestamp getTimestampValue(String timestampValue) {

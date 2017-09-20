@@ -28,11 +28,6 @@ public class ResultTableElement extends KpiDataObject {
 	}
 
 	@Override
-	public void loadContents(String[] contents) {
-		columnValues = contents;
-	}
-
-	@Override
 	public Object getColumnValue(String column) {
 		// TODO Auto-generated method stub
 		return null;
@@ -72,6 +67,12 @@ public class ResultTableElement extends KpiDataObject {
 			LOGGER.log(Level.WARNING, Errors.getError(10));
 		}
 		return jsonObject;
+	}
+
+	@Override
+	public boolean loadContents(String[] contents) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

@@ -104,6 +104,18 @@ public class Settings {
 	public static final String ktable_number_support_format = "NUMBER_SUPPORT_FORMAT";
 	public static final String ktable_active = "ACTIVE";
 	public static final String ktable_company_context = "COMPANY_CONTEXT";
+	
+	// KPI Values Table
+	public static final String kvtable = "kpi_values";
+	public static final String kvtable_id="id";
+	public static final String kvtable_timestamp="timestmp";
+	public static final String kvtable_kpi="kpi_id";
+	public static final String kvtable_machine="machine_id";
+	public static final String kvtable_value="kpi_value";
+	public static final String kvtable_product="product_id";
+	public static final String kvtable_mould="mould_id";
+	public static final String kvtable_shift="shift_id";
+	public static final String kvtable_granularity="granularity_id";
 
 	// Logger Table
 	public static final String ltable = "logs";
