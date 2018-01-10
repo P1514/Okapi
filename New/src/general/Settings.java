@@ -158,6 +158,14 @@ public class Settings {
 	public static final int QUALITY = 7;
 	public static final int OEE = 8;
 
+	// Granularity
+	public static final int MONTH = 1;
+	public static final int WEEK = 2;
+	public static final int DAY = 3;
+	public static final int HOUR = 4;
+	public static final int MINUTE = 5;
+	public static final int SECOND = 6;
+	
 	/**
 	 * Connlocal.
 	 *

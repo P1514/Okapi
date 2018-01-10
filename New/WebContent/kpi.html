@@ -66,18 +66,22 @@
 				</div>
 				<div id="productDropdown" class="col-md-6">
 					<label><select id="productSelect" class="form-control" style="width: 150px;">
+						<option selected value> All products </option>
 					</select> </label>
 				</div>
 				<div id="machineDropdown" class="col-md-6">
 					<label><select id="machineSelect" class="form-control" style="width: 150px;">
+						<option selected value> All machines </option>
 					</select> </label>
 				</div>
 				<div id="shiftDropdown" class="col-md-6">
 					<label><select id="shiftSelect" class="form-control" style="width: 150px;">
+						<option selected value> All shifts </option>
 					</select> </label>
 				</div>
 				<div id="mouldDropdown" class="col-md-6">
 					<label><select id="mouldSelect"  class="form-control" style="width: 150px;">
+						<option selected value> All moulds </option>
 					</select> </label>
 				</div>
 			</div>
@@ -116,11 +120,15 @@
 						class="form-control" id="endDate" type="date"
 						style="width: 200px;">
 				</form>
-				<label>Granularity: <select class="form-control"
+				<label>Granularity: <select id="granularitySelect" class="form-control"
 					style="width: 150px;">
-						<option value="hourly">Hourly</option>
-						<option value="daily">Daily</option>
-						<option value="Monthly">Monthly</option>
+						<option value="hourly">Hour</option>
+						<option value="Monthly">Minute</option>
+						<option value="Monthly">Second</option>
+						<option value="Monthly">Month</option>
+						<option value="daily">Day</option>
+						<option value="Monthly">Week</option>
+						
 				</select>
 				</label>
 			</div>
@@ -131,7 +139,7 @@
 				type="checkbox" value="">Show prediction</label> <br>
 			<button id="update" type="button"
 				style="margin-top: 10px; margin-bottom: 10px;"
-				class="btn btn-primary">Update</button>
+				class="btn btn-primary" onclick="requestChart()">Update</button>
 			<div width="100%">
 				<canvas id="heatmap" width="500px" height="400px"></canvas>
 			</div>
