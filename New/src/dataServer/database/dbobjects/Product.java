@@ -12,12 +12,6 @@ public class Product extends KpiDataObject {
 	}
 
 	@Override
-	public void loadContents(String[] contents) {
-		name = "'"+contents[1]+"'";
-		code = "'"+contents[2]+"'";
-	}
-
-	@Override
 	public Object getColumnValue(String column) {
 		Object columnObj = null;
 		switch (column) {
@@ -36,5 +30,11 @@ public class Product extends KpiDataObject {
 	public Object toJSonObject() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean loadContents(String[] contents) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

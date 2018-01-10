@@ -13,12 +13,6 @@ public class Sensor extends KpiDataObject {
 	}
 
 	@Override
-	public void loadContents(String[] contents) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public Object getColumnValue(String column) {
 		// TODO Auto-generated method stub
 		return null;
@@ -28,5 +22,11 @@ public class Sensor extends KpiDataObject {
 	public Object toJSonObject() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean loadContents(String[] contents) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

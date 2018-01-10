@@ -21,7 +21,7 @@ ws.onmessage = function(event) {
 	var request = JSON.parse(event.data.replace(/\\/g, '')); // used to remove extra brackets in diversity, check this if json seems incorrect
 
 	// check OPs in each request
-	if (request[0].Op == "top_chart") {
+	if (request[0].Op == "scrap") {
 
 		values = request;
 		drawChart();
@@ -56,8 +56,12 @@ ws.onmessage = function(event) {
 
 	if (request[0].Op == "shifts") {
 		setOptions('shiftSelect', request);
+		requestChart();
+	}
+	
+	if (request[0].Op == "scrapChart") {
+		drawChart(request);
 
-		updateCharts();
 	}
 };
 
@@ -150,26 +154,29 @@ function getOption(id) {
 function setOptions(id, options) {
 	for (var i = 0; i < options.length; i++) {
 		if (!options[i].hasOwnProperty('Op')) {
-	    $('#' + id).append($('<option/>', {
-	      value: options[i].Value,
-	      text: options[i].Value
-	    }));
+			$('#' + id).append($('<option/>', {
+				value : options[i].Value,
+				text : options[i].Value
+			}));
 		}
 	}
 }
 
-function drawChart() {
+function drawChart(values) {
 
 	// Scrap rate chart (top)
 	var data = new google.visualization.DataTable();
-	data.addColumn('string', 'Month');
+	data.addColumn('date', 'Date');
 	data.addColumn('number', 'Scrap rate');
 
 	for (var i = 0; i < values.length; i++) {
-		if (values[i].hasOwnProperty("Month")) {
-			var month = values[i].Month;
+		if (values[i].hasOwnProperty("Value")) {
+			var strDate = values[i].Date.split('-');
+			var strTime = values[i].Time.split(':');
+//			var date = new Date(parseInt(strDate[0]), parseInt(strDate[1]), parseInt(strDate[3]), parseInt(strTime[0]), parseInt(strTime[1]), parseInt(strTime[2]), 0);
+			var date = new Date(values[i].Date + ' ' + values[i].Time);
 			var value = values[i].Value;
-			data.addRow([ month, value ]);
+			data.addRow([ date, value ]);
 		}
 	}
 
@@ -180,9 +187,15 @@ function drawChart() {
 	var options = {
 		title : 'Scrap rate',
 		backgroundColor : '#F5F5F5',
-		curveType : 'function',
 		pointSize : 5,
-		colors : [ '#24292e' ]
+		colors : [ '#24292e' ],
+		explorer: {
+            axis: 'horizontal',
+            keepInBounds: true,
+            maxZoomIn: 4.0,
+            maxZoomOut: 1.0
+          },
+		pointsVisible: false
 	};
 
 	var chart = new google.visualization.LineChart(document
@@ -201,7 +214,7 @@ function drawChart() {
 			data : [ 1.5, 7, 5 ]
 		}, {
 			label : 'Product C',
-			data : [ 2, 1, 1.5]
+			data : [ 2, 1, 1.5 ]
 		}, {
 			label : 'Product D',
 			data : [ 3, 5.5, 1 ]
@@ -232,3 +245,25 @@ function drawChart() {
 	var newChart = new Chart(ctx).HeatMap(data, options);
 
 }
+function requestChart() {
+	var json = {
+		'Op' : 'getScrapChart',
+		'Product' : $('#productSelect').find(":selected").text(),
+		'Machine' : $('#machineSelect').find(":selected").text(),
+		'Shift' : $('#shiftSelect').find(":selected").text(),
+		'Mould' : $('#mouldSelect').find(":selected").text(),
+		'Start' : $('#startDate').val(),
+		'End' : $('#endDate').val(),
+		'Granularity' : $('#granularitySelect').find(":selected").text(),
+	};
+	ws.send(JSON.stringify(json));
+}
+
+/*
+ * $(function () { $('#startDate').datetimepicker();
+ * $('#endDate').datetimepicker({ useCurrent: false });
+ * $("#startDate").on("dp.change", function (e) {
+ * $('#endDate').data("DateTimePicker").minDate(e.date); });
+ * $("#endDate").on("dp.change", function (e) {
+ * $('#startDate').data("DateTimePicker").maxDate(e.date); }); });
+ */

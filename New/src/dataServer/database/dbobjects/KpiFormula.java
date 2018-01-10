@@ -20,11 +20,6 @@ public class KpiFormula extends KpiDataObject {
 				"operator_2", "term3_kpi_id", "term3_sensor_id","criteria"));
 	}
 
-	@Override
-	public void loadContents(String[] contents) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public Object getColumnValue(String column) {
@@ -61,5 +56,12 @@ public class KpiFormula extends KpiDataObject {
 	public Object toJSonObject() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public boolean loadContents(String[] contents) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

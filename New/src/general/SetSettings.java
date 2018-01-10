@@ -15,7 +15,7 @@ class SetSettings {
         JTextField DBport = new JTextField("3306");
         JTextField DBsettings = new JTextField("autoReconnect=true&useSSL=false");
         JTextField DBuser = new JTextField("user");
-        JTextField DBpass = new JTextField("password");
+        JPasswordField DBpass = new JPasswordField("");
         JTextField DBname = new JTextField("Okapi");
         
         JPanel panel = new JPanel(new GridLayout(0, 1));

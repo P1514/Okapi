@@ -12,11 +12,6 @@ public class KpiAggType extends KpiDataObject {
 		super.columnsNames.addAll(Arrays.asList("aggregation"));
 	}
 
-	@Override
-	public void loadContents(String[] contents) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public Object getColumnValue(String column) {
@@ -35,5 +30,12 @@ public class KpiAggType extends KpiDataObject {
 	public Object toJSonObject() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public boolean loadContents(String[] contents) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

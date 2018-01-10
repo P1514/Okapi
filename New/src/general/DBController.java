@@ -5,11 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import file_manager.fileLoader;
 import dataServer.database.dbobjects.KpiDataObject;
@@ -24,13 +30,13 @@ import general.Logging;
  *
  */
 public class DBController {
-	
-	private static Logger LOGGER = new Logging().create(DBController.class.getName(),false);
-	
+
+	private static Logger LOGGER = new Logging().create(DBController.class.getName(), false);
+
 	public DBController() {
 
 	}
-	
+
 	/**
 	 * Gets the total units from the database TODO get info from db
 	 * 
@@ -78,8 +84,9 @@ public class DBController {
 					result.add(rs.getString(1));
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, Errors.getError(11) + "/" + sql + "/");
+			return null;
 		}
 		return result;
 	}
@@ -99,8 +106,9 @@ public class DBController {
 					result.add(rs.getString(1));
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, Errors.getError(11) + "/" + sql + "/");
+			return null;
 		}
 		return result;
 	}
@@ -120,10 +128,11 @@ public class DBController {
 					result.add(rs.getString(1));
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, Errors.getError(11) + "/" + sql + "/");
+			return null;
 		}
-		;
+
 		return result;
 	}
 
@@ -142,8 +151,103 @@ public class DBController {
 					result.add(rs.getString(1));
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, Errors.getError(11) + "/" + sql + "/");
+			return null;
+		}
+		return result;
+	}
+
+	public JSONArray getScrapChart(String product, String machine, String shift, String mould, Date startDate,
+			Date endDate, String granularity) throws JSONException {
+
+		JSONArray result = new JSONArray();
+		JSONObject obj = new JSONObject();
+		
+		obj.put("Op", "scrapChart");
+		result.put(obj);
+		String query = "SELECT KPI_TIMESTMP,SUM(KPI_VALUE)/COUNT(KPI_VALUE) FROM kpi_values WHERE ";
+		
+		boolean prod = false;
+		boolean mach = false;
+		boolean shf = false;
+		boolean mld = false;
+		boolean str = false;
+		boolean end = false;
+		
+		if (!product.contains("All products")) {
+			query += "PRODUCT_ID = ? AND ";
+			prod = true;
+		}
+		
+		if (!machine.contains("All machines")) {
+			query += "MACHINE_ID = ? AND ";
+			mach = true;
+		}
+		
+		if (!shift.contains("All shifts")) {
+			query += "SHIFT_ID = ? AND ";
+			shf = true;
+		}
+		
+		if (!mould.contains("All moulds")) {
+			query += "MOULD_ID = ? AND ";
+			mld = true;
+		}
+		
+		if (startDate != null) {
+			query += "KPI_TIMESTMP >= ? AND ";
+			str = true;
+		}
+		
+		if (endDate != null) {
+			query += "KPI_TIMESTMP <= ? AND ";
+			end = true;
+		}
+		
+		query += "GRANULARITY_ID = ? AND KPI_ID = " + Settings.SCRAP_RATE + " GROUP BY KPI_TIMESTMP;";
+		
+		PreparedStatement ps = null;
+		try (Connection cnlocal = Settings.connlocal()) {
+			ps = cnlocal.prepareStatement(query);
+			int param = 1;
+			if (prod == true) {
+				ps.setInt(param++, getNameId("product", product));
+			}
+			
+			if (mach == true) {
+				ps.setInt(param++, getNameId("machine", machine));
+			}
+			
+			if (shf == true) {
+				ps.setInt(param++, getNameId("shift", shift));
+			}
+			
+			if (mld == true) {
+				ps.setInt(param++, getNameId("mould", mould));
+			}
+			
+			if (str == true) {
+				ps.setTimestamp(param++, new Timestamp(startDate.getTime()));
+			}
+			
+			if (end == true) {
+				ps.setTimestamp(param++, new Timestamp(endDate.getTime()));
+			}
+			
+			ps.setInt(param++, getNameId("granularity", granularity));
+			System.out.println(ps.toString());
+			ResultSet queryResult = ps.executeQuery();
+			for (; queryResult.next();) {
+				JSONObject val = new JSONObject();
+				val.put("Date", queryResult.getDate(1));
+				val.put("Time", queryResult.getTime(1));
+				val.put("Value", queryResult.getDouble(2));
+				result.put(val);
+			}
+		} catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, Errors.getError(11) + "/" + query + "/");
+			return null;
 		}
 		return result;
 	}
@@ -173,7 +277,8 @@ public class DBController {
 				insert.setString(3, log);
 				insert.executeUpdate();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.log(Level.SEVERE, Errors.getError(11) + "/" + sql + "/");
+				return false;
 			}
 			return true;
 		} else {
@@ -185,7 +290,7 @@ public class DBController {
 		int id = 0;
 
 		// TODO change tableName for specific table, prevent injection
-		String sql = "SELECT \"ID\" FROM \"" + tableName.toUpperCase() + "\" WHERE NAME='?'";
+		String sql = "SELECT ID FROM " + tableName.toUpperCase() + " WHERE NAME LIKE \"%" + valueName + "%\";";
 		PreparedStatement query = null;
 		try (Connection cnlocal = Settings.connlocal()) {
 			query = cnlocal.prepareStatement(sql);
@@ -194,80 +299,32 @@ public class DBController {
 				id = (int) queryResult.getObject(1);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, Errors.getError(11) + "/" + sql + "/");
+			return null;
 		}
 		return id;
 	}
 
-	private ArrayList<String> prepareInsertQuery(ArrayList<KpiDataObject> buffer) {
-		// create insert query string
-
-		String columnNames = "";
-		String values = "";
-		ArrayList<String> queryList = new ArrayList<>();
-		// int id = getMaxId("kpi_values");
-
-		for (KpiDataObject kpiValue : buffer) {
-			// columnNames = "\"id\", ";
-			// values = (++id) + ", ";
-			columnNames = "";
-			values = "";
-			for (String col : kpiValue.columnsNames) {
-				columnNames += "\"" + col + "\", ";
-				values += kpiValue.getColumnValue(col) + ", ";
-			}
-			columnNames = columnNames.substring(0, columnNames.length() - 2);
-			values = values.substring(0, values.length() - 2);
-			// queryList.add("INSERT INTO \""+kpiValue.tableName+"\" ("+columnNames+")
-			// VALUES ("+values+");");
-			queryList.add("INSERT INTO \"" + kpiValue.tableName.toUpperCase() + "\" (" + columnNames.toUpperCase()
-					+ ") VALUES (" + values + ");");
-		}
-
-		return queryList;
-	}
-
-	public boolean insertBatchData(ArrayList<KpiDataObject> buffer) {
-
-		ArrayList<String> batchQuery = prepareInsertQuery(buffer);
-		try (Connection cnlocal = Settings.connlocal()) {
-			try (Statement s = cnlocal.createStatement();) {
-				for (String query : batchQuery) {
-					s.executeQuery(query);
-				}
-			} catch (SQLException e) {
-				cnlocal.rollback();
-				LOGGER.log(Level.SEVERE, Errors.getError(7));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return true;
-
-	}
-
 	public Integer getForeignKeyId(String tableName, String foreignKeyName, String valueName) {
-		Integer id=0;
-		
-		//TODO replace foreignKeyName with list of tables to prevent injection
-		String query = "SELECT \""+foreignKeyName.toUpperCase()+"\" FROM \""+tableName.toUpperCase()+"\" WHERE NAME='"+valueName+"';";
+		Integer id = 0;
 
-		
-		
-	    try (Connection cnlocal = Settings.connlocal()){
-	    	ResultSet queryResult = cnlocal.createStatement().executeQuery(query);
-			for (; queryResult.next(); ) {
-				id = (Integer)queryResult.getObject(1);
+		// TODO replace foreignKeyName with list of tables to prevent injection
+		String query = "SELECT \"" + foreignKeyName.toUpperCase() + "\" FROM \"" + tableName.toUpperCase()
+				+ "\" WHERE NAME='" + valueName + "';";
+
+		try (Connection cnlocal = Settings.connlocal()) {
+			ResultSet queryResult = cnlocal.createStatement().executeQuery(query);
+			for (; queryResult.next();) {
+				id = (Integer) queryResult.getObject(1);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE,"getForeignKeyId exception: "+e );
+			LOGGER.log(Level.SEVERE, "getForeignKeyId exception: " + e);
 			e.printStackTrace();
-		}		
-		
+		}
+
 		return id;
 	}
 }
